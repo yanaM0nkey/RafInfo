@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6183e3</color>
+    <color name="colorPrimaryDark">#334475</color>
+    <color name="colorAccent">#6183e3</color>
+    <color name="default_background">#eef2fb</color>
+    <color name="colorGolden">#df9b1a</color>
+    <color name="colorGoldenRod">#f0a008</color>
+    <color name="white">#FFFFFF</color>
+    <color name="dimGray">#696969</color>
+    <color name="lightGrey">#D3D3D3</color>
+</resources>

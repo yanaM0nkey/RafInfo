@@ -1,0 +1,90 @@
+<resources>
+    <string name="app_name">Raf Info</string>
+    <string name="network_error">Проверьте подключение к интернету</string>
+    <string name="error">Упс…что-то пошло не так</string>
+    <string name="next_button">Далее</string>
+    <string name="created">сегодня в %s</string>
+    <string name="updated">обновлено %s</string>
+    <string name="validate_error">Время сеанса истекло. Войдите еще раз</string>
+
+    <!--Log in-->
+    <string name="log_in_title">Белорусский государственный университет</string>
+    <string name="log_in_subtitle">Факультет радиофизики и компьютерных технологий</string>
+    <string name="log_in_login">Логин</string>
+    <string name="log_in_password">Пароль</string>
+    <string name="log_in_button">Войти</string>
+    <string name="log_in_error_login_empty">Пожалуйста, введите логин</string>
+    <string name="log_in_error_password_empty">Пожалуйста, введите пароль</string>
+    <string name="log_in_invalid">Неправильный логин или пароль</string>
+
+    <!--Sign up-->
+    <string name="sign_up_department">Кафедра</string>
+    <string name="sign_up_name">Имя</string>
+    <string name="sign_up_surname">Фамилия</string>
+    <string name="sign_up_email">Email</string>
+    <string name="sign_up_button">Зарегистрироваться</string>
+    <string name="sign_up_tv">Укажите свои данные</string>
+    <string name="sign_up_error_name_empty">Пожалуйста, введите имя</string>
+    <string name="sign_up_error_surname_empty">Пожалуйста, введите фамилию</string>
+    <string name="sign_up_error_email_empty">Пожалуйста, введите email</string>
+    <string name="sign_up_error_department_empty">Пожалуйста, выберите кафедру</string>
+    <string name="sign_up_password">Повторите пароль</string>
+    <string name="sign_up_wrong_email">Неверный формат email</string>
+    <string name="sign_up_password_empty">Пожалуйста, повторите пароль</string>
+    <string name="sign_up_validate_password">Пароли не совпадают</string>
+    <string name="sign_up_same_login">Пользователь с таким логином уже существует</string>
+    <string name="sign_up_ok">Регистрация прошла успешно</string>
+
+    <!--Announcement-->
+    <string name="announcement">Объявления</string>
+    <string name="announcement_location">Где: %s</string>
+    <string name="announcement_date">Когда: %s</string>
+    <string name="announcement_details">Детали объявления</string>
+    <string name="announcement_title">Заголовок объявления</string>
+    <string name="announcement_date_time">Дата</string>
+    <string name="announcement_time">Время</string>
+    <string name="announcement_place">Место</string>
+    <string name="announcement_description">Дополнительная информация</string>
+    <string name="announcement_new">Новое объявление</string>
+    <string name="announcement_error_title_empty">Пожалуйста, введите заголовок объявления</string>
+    <string name="announcement_error_date_empty">Пожалйста, выберите дату</string>
+    <string name="announcement_error_time_empty">Пожалуйста, выберите время</string>
+    <string name="announcement_error_location_empty">Пожалуйста, укажите место</string>
+
+    <!--Vacancies-->
+    <string name="vacancies">Вакансии</string>
+    <string name="vacancies_details">Детали вакансии</string>
+    <string name="vacancies_location">Адрес: %s</string>
+    <string name="vacancies_employer">Работодатель: %s</string>
+    <string name="vacancies_contact_info">Контактные данные: %s</string>
+    <string name="vacancies_details_title">Работодатель</string>
+
+    <!--StaffInfo-->
+    <string name="staff_info">Инфо</string>
+    <string-array name="category">
+        <item>1ая кафедра</item>
+        <item>2ая кафедра</item>
+        <item>3я кафедра</item>
+        <item>4ая кафедра</item>
+        <item>5ая кафедра</item>
+        <item>6ая кафедра</item>
+        <item>7ая кафедра</item>
+        <item>8ая кафедра</item>
+    </string-array>
+    <string name="staff_position">%1$s, %2$s</string>
+    <string name="staff_search">Поиск по фамилии</string>
+    <string name="staff_empty_search">Сотрудника c такой фамилией не найдено.\nПопробуйте еще раз</string>
+
+    <!--Settings-->
+    <string name="settings">Настройки</string>
+    <string name="settings_personal_info">Изменить персональные данные</string>
+    <string name="settings_logout">Выйти</string>
+    <string name="settings_personal_info_title">Персональные данные</string>
+    <string name="settings_save">Сохранить</string>
+    <string name="settings_save_toast">Данные сохранены</string>
+    <string name="settings_dialog_title">Вы действительно хотите выйти?</string>
+    <string name="settings_dialog_positive_button">Да</string>
+    <string name="settings_dialog_negative_button">Нет</string>
+
+
+</resources>
