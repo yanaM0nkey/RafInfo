@@ -78,13 +78,13 @@ public class SettingsFragment extends BaseFragment {
     private void createDialog(final Context context, final FragmentActivity activity){
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         dialog.setMessage(getString(R.string.settings_dialog_title));
-        dialog.setPositiveButton(getString(R.string.settings_dialog_positive_button), new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton(getString(R.string.dialog_positive_button), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
                 logout(context, activity);
                 showProgress(true);
             };
         });
-        dialog.setNegativeButton(getString(R.string.settings_dialog_negative_button), new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton(getString(R.string.dialog_negative_button), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
                 dialog.dismiss();
             }

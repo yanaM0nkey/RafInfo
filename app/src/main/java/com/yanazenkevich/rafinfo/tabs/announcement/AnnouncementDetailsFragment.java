@@ -110,7 +110,7 @@ public class AnnouncementDetailsFragment extends BaseFragment {
     private String createShareText(){
         return announcement.getTitle() +
                 "\n" +
-                getResources().getString(R.string.announcement_date, DateUtils.getAnnouncementDate(announcement)) +
+                getResources().getString(R.string.announcement_date, DateUtils.getAnnouncementDateFull(announcement)) +
                 "\n" +
                 getResources().getString(R.string.announcement_location, announcement.getLocation()) +
                 "\n" +

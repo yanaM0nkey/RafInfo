@@ -6,6 +6,10 @@
     <string name="created">сегодня в %s</string>
     <string name="updated">обновлено %s</string>
     <string name="validate_error">Время сеанса истекло. Войдите еще раз</string>
+    <string name="dialog_positive_button">Да</string>
+    <string name="dialog_negative_button">Нет</string>
+    <string name="button_save">Сохранить</string>
+    <string name="button_delete">Удалить</string>
 
     <!--Log in-->
     <string name="log_in_title">Белорусский государственный университет</string>
@@ -50,6 +54,8 @@
     <string name="announcement_error_date_empty">Пожалйста, выберите дату</string>
     <string name="announcement_error_time_empty">Пожалуйста, выберите время</string>
     <string name="announcement_error_location_empty">Пожалуйста, укажите место</string>
+    <string name="announcement_edit">Редактирование объявления</string>
+    <string name="announcement_delete">Вы действительно хотите удалить это объявление?</string>
 
     <!--Vacancies-->
     <string name="vacancies">Вакансии</string>
@@ -80,11 +86,9 @@
     <string name="settings_personal_info">Изменить персональные данные</string>
     <string name="settings_logout">Выйти</string>
     <string name="settings_personal_info_title">Персональные данные</string>
-    <string name="settings_save">Сохранить</string>
     <string name="settings_save_toast">Данные сохранены</string>
     <string name="settings_dialog_title">Вы действительно хотите выйти?</string>
-    <string name="settings_dialog_positive_button">Да</string>
-    <string name="settings_dialog_negative_button">Нет</string>
+
 
 
 </resources>

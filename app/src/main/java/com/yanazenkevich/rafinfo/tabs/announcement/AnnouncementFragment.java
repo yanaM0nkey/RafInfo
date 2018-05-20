@@ -1,7 +1,6 @@
 package com.yanazenkevich.rafinfo.tabs.announcement;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -101,7 +100,7 @@ public class AnnouncementFragment extends BaseFragment{
 
     private void showItems(List<Announcement> announcements) {
         if (announcements.size() != 0) {
-            final List<BaseListItem> items = new ArrayList<>(AnnouncementItem.getItems(announcements, getBaseActivity()));
+            final List<BaseListItem> items = new ArrayList<>(AnnouncementItem.getItems(announcements, getBaseActivity(), isAdmin));
             adapter.replaceElements(items);
             adapter.notifyDataSetChanged();
         } else {
@@ -137,7 +136,7 @@ public class AnnouncementFragment extends BaseFragment{
     }
 
     private void addNewAnnouncement(final AppCompatActivity activity){
-        NavigationUtils.replaceWithFragment(activity, R.id.frame_layout,
+        NavigationUtils.replaceWithFragmentAndAddToBackStack(activity, R.id.frame_layout,
                 AnnouncementAddFragment.newInstance());
     }
 }

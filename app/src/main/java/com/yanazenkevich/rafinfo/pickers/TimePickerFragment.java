@@ -14,9 +14,6 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
     private TimePickerListener listener;
 
-    private int hour;
-    private int minute;
-
     public static TimePickerFragment newInstance(TimePickerListener listener){
         TimePickerFragment fragment = new TimePickerFragment();
         fragment.listener = listener;
@@ -33,22 +30,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
     @Override
     public void onTimeSet(android.widget.TimePicker view, int hourOfDay, int minute) {
-        this.hour = hourOfDay;
-        this.minute = minute;
-        listener.onTimeSelected();
+        listener.onTimeSelected(hourOfDay, minute);
     }
 
-    public String getSelectedTime(){
-        return formatTime(hour) + ":" + formatTime(minute);
-    }
-
-    private String formatTime(int time){
-        String selected;
-        if(time == 0){
-            selected = "00";
-        }else{
-            selected = time < 10 ? "0"+String.valueOf(time) : String.valueOf(time);
-        }
-        return selected;
-    }
 }

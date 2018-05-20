@@ -101,7 +101,6 @@
 
     </android.support.design.widget.TextInputLayout>
 
-    <!--android:foreground="?android:attr/selectableItemBackground"-->
     <TextView
         android:id="@+id/fl_login_button"
         android:layout_width="256dp"

@@ -45,11 +45,24 @@ public class DateUtils {
         }
     }
 
+    public static String getAnnouncementDateFull(Announcement announcement){
+        return getString(announcement, "EEE, d MMM yyyy HH:mm");
+    }
+
     public static String getAnnouncementDate(Announcement announcement){
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm");
+        return getString(announcement, "dd.MM.yyyy");
+    }
+
+    public static String getAnnouncementTime(Announcement announcement){
+       return getString(announcement, "HH:mm");
+    }
+
+    private static String getString(Announcement announcement, String string){
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat(string);
         format.setTimeZone(TimeZone.getTimeZone("Europe/Minsk"));
         return format.format(announcement.getDate());
     }
+
 
     public static long getDateInMS(String date){
         @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
@@ -61,5 +74,27 @@ public class DateUtils {
             e.printStackTrace();
         }
         return dDate.getTime();
+    }
+
+    public static String getSelectedDate(int day, int month, int year){
+        return formatDate(day)+"."+formatDate(month+1)+"."+String.valueOf(year);
+    }
+
+    private static String formatDate(int selected){
+        return selected < 10 ? "0"+String.valueOf(selected) : String.valueOf(selected);
+    }
+
+    public static String getSelectedTime(int hour, int minute){
+        return formatTime(hour) + ":" + formatTime(minute);
+    }
+
+    private static String formatTime(int time){
+        String selected;
+        if(time == 0){
+            selected = "00";
+        }else{
+            selected = time < 10 ? "0"+String.valueOf(time) : String.valueOf(time);
+        }
+        return selected;
     }
 }

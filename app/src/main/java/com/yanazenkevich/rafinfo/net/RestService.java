@@ -104,4 +104,12 @@ public class RestService {
     public Observable<Announcement> newAnnouncement (Announcement announcement) {
         return restApi.newAnnouncement(announcement);
     }
+
+    public Observable<Announcement> editAnnouncement(Announcement announcement){
+        return restApi.editAnnouncement(announcement.getId(), announcement);
+    }
+
+    public Observable<Announcement> deleteAnnouncement(String id){
+        return restApi.deleteAnnouncement(id);
+    }
 }

@@ -1,5 +1,5 @@
 package com.yanazenkevich.rafinfo.listeners;
 
 public interface TimePickerListener {
-    void onTimeSelected();
+    void onTimeSelected(int hour, int minute);
 }

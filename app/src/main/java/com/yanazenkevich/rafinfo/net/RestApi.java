@@ -11,6 +11,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -55,4 +56,10 @@ public interface RestApi {
 
     @POST("data/Announcements")
     Observable<Announcement> newAnnouncement(@Body Announcement announcement);
+
+    @PUT("data/Announcements/{objectId}")
+    Observable<Announcement> editAnnouncement(@Path("objectId") String id, @Body Announcement announcement);
+
+    @DELETE("data/Announcements/{objectId}")
+    Observable<Announcement> deleteAnnouncement(@Path("objectId") String id);
 }

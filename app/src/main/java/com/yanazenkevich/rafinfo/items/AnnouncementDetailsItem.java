@@ -44,7 +44,7 @@ public class AnnouncementDetailsItem implements BaseListItem {
         tvDescription.setText(announcement.getDescription());
         tvLocation.setText(announcement.getLocation());
         tvStatus.setText(DateUtils.getStatus(announcement, context));
-        tvDate.setText(DateUtils.getAnnouncementDate(announcement));
+        tvDate.setText(DateUtils.getAnnouncementDateFull(announcement));
         isActiveItem(context);
     }
 

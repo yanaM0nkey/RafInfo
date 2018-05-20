@@ -14,10 +14,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     private DatePickerListener listener;
 
-    private int year;
-    private int month;
-    private int day;
-
     public static DatePickerFragment newInstance(DatePickerListener listener){
         DatePickerFragment fragment = new DatePickerFragment();
         fragment.listener = listener;
@@ -35,17 +31,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
-       this.year = year;
-       this.month = month;
-       this.day = day;
-       listener.onDateSelected();
-    }
-
-    public String getSelectedDate(){
-        return formatDate(day)+"."+formatDate(month+1)+"."+String.valueOf(year);
-    }
-
-    private String formatDate(int selected){
-        return selected < 10 ? "0"+String.valueOf(selected) : String.valueOf(selected);
+       listener.onDateSelected(day, month, year);
     }
 }
