@@ -61,7 +61,6 @@ public class StaffInfoFragment extends BaseFragment {
         }
     };
 
-
     public static StaffInfoFragment newInstance(){
         return new StaffInfoFragment();
     }
@@ -119,13 +118,12 @@ public class StaffInfoFragment extends BaseFragment {
                 return true;
             }
         });
-
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        getBaseActivity().getToolbar().removeAllViews();
+        getBaseActivity().getToolbar().removeViewAt(0);
     }
 
     @Override

@@ -7,15 +7,11 @@ public class Vacancy {
     @SerializedName("objectId")
     private String id;
     private String name;
-    private String employer;
+    private Employer employer;
     private String location;
     @SerializedName("contact_info")
     private String contactInfo;
     private String description;
-    @SerializedName("employer_site")
-    private String employerSite;
-    @SerializedName("employer_info")
-    private String employerInfo;
     private long created;
     private long updated;
 
@@ -39,11 +35,11 @@ public class Vacancy {
         this.name = name;
     }
 
-    public String getEmployer() {
+    public Employer getEmployer() {
         return employer;
     }
 
-    public void setEmployer(String employer) {
+    public void setEmployer(Employer employer) {
         this.employer = employer;
     }
 
@@ -69,21 +65,5 @@ public class Vacancy {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getEmployerSite() {
-        return employerSite;
-    }
-
-    public void setEmployerSite(String employerSite) {
-        this.employerSite = employerSite;
-    }
-
-    public String getEmployerInfo() {
-        return employerInfo;
-    }
-
-    public void setEmployerInfo(String employerInfo) {
-        this.employerInfo = employerInfo;
     }
 }

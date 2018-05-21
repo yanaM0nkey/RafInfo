@@ -73,7 +73,7 @@ public class VacanciesFragment extends BaseFragment {
             @Override
             public void onError(@io.reactivex.annotations.NonNull Throwable e) {
                 showProgress(false);
-                ErrorUtils.errorHandlingLogin(context, e);
+                ErrorUtils.errorHandling(context, e);
             }
 
             @Override

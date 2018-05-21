@@ -6,17 +6,17 @@ import android.widget.TextView;
 
 import com.yanazenkevich.rafinfo.R;
 import com.yanazenkevich.rafinfo.base.BaseListItem;
-import com.yanazenkevich.rafinfo.entities.Vacancy;
+import com.yanazenkevich.rafinfo.entities.Employer;
 
 public class EmployerItem implements BaseListItem {
 
-    private final Vacancy vacancy;
+    private final Employer employer;
     private TextView tvEmployer;
     private TextView tvSite;
     private TextView tvDescription;
 
-    public EmployerItem(Vacancy vacancy) {
-        this.vacancy = vacancy;
+    public EmployerItem(Employer employer) {
+        this.employer = employer;
     }
 
     @Override
@@ -33,12 +33,12 @@ public class EmployerItem implements BaseListItem {
 
     @Override
     public void renderView(final Context context, View view) {
-        tvEmployer.setText(vacancy.getEmployer());
-        tvSite.setText(vacancy.getEmployerSite());
-        tvDescription.setText(vacancy.getEmployerInfo());
+        tvEmployer.setText(employer.getName());
+        tvSite.setText(employer.getSite());
+        tvDescription.setText(employer.getInfo());
     }
 
-    public Vacancy getVacancy() {
-        return vacancy;
+    public Employer getEmployer() {
+        return employer;
     }
 }

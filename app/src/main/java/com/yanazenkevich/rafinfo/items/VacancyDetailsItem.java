@@ -52,7 +52,7 @@ public class VacancyDetailsItem implements BaseListItem {
         tvDescription.setText(vacancy.getDescription());
         tvLocation.setText(vacancy.getLocation());
         tvStatus.setText(DateUtils.getStatus(vacancy, context));
-        tvEmployer.setText(vacancy.getEmployer());
+        tvEmployer.setText(vacancy.getEmployer().getName());
         tvContactInfo.setText(vacancy.getContactInfo());
         llEmployer.setOnClickListener(new View.OnClickListener() {
             @Override

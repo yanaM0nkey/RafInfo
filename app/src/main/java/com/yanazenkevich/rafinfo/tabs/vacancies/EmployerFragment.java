@@ -59,7 +59,7 @@ public class EmployerFragment extends BaseFragment {
     private void showItems(Vacancy vacancy) {
         final List<BaseListItem> items = new ArrayList<>();
         if (vacancy != null) {
-            items.add(new EmployerItem(vacancy));
+            items.add(new EmployerItem(vacancy.getEmployer()));
             adapter.replaceElements(items);
             adapter.notifyDataSetChanged();
         } else {
