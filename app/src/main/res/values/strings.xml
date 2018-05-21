@@ -64,6 +64,10 @@
     <string name="vacancies_employer">Работодатель: %s</string>
     <string name="vacancies_contact_info">Контактные данные: %s</string>
     <string name="vacancies_details_title">Работодатель</string>
+    <string name="vacancy_title">Заголовок вакансии</string>
+    <string name="vacancy_address">Адрес</string>
+    <string name="vacancy_contact">Контактная информация</string>
+    <string name="vacancy_employer">Работодатель</string>
 
     <!--StaffInfo-->
     <string name="staff_info">Инфо</string>

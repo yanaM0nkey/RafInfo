@@ -1,12 +1,17 @@
 package com.yanazenkevich.rafinfo.tabs.vacancies;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,14 +23,21 @@ import com.yanazenkevich.rafinfo.entities.Vacancy;
 import com.yanazenkevich.rafinfo.interactions.VacancyUseCase;
 import com.yanazenkevich.rafinfo.items.VacancyItem;
 import com.yanazenkevich.rafinfo.utils.ErrorUtils;
+import com.yanazenkevich.rafinfo.utils.NavigationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.observers.DisposableObserver;
 
+import static com.yanazenkevich.rafinfo.interactions.AuthService.KEY_ADMIN;
+import static com.yanazenkevich.rafinfo.interactions.AuthService.SHARED_PREFS_NAME;
+
 public class VacanciesFragment extends BaseFragment {
 
+    private static final int MENU_ITEM_ADD_KEY = 3;
+
+    private boolean isAdmin;
     private VacancyUseCase useCase;
     private BaseRecyclerAdapter adapter;
     private RecyclerView recyclerView;
@@ -60,6 +72,8 @@ public class VacanciesFragment extends BaseFragment {
         recyclerView.setLayoutManager(layoutManager);
         getVacancies(getContext());
         getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        SharedPreferences preferences = getContext().getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+        isAdmin = preferences.getBoolean(KEY_ADMIN, false);
     }
 
     private void getVacancies(final Context context) {
@@ -95,5 +109,33 @@ public class VacanciesFragment extends BaseFragment {
 
     private void showProgress(boolean show) {
         vProgress.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item != null) {
+            switch (item.getItemId()) {
+                case MENU_ITEM_ADD_KEY: {
+                    addNewVacancy(getBaseActivity());
+                    return true;
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        if(isAdmin) {
+            MenuItem item = menu.add(0, MENU_ITEM_ADD_KEY, Menu.NONE, "Add");
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            item.setIcon(R.drawable.ic_add);
+        }
+    }
+
+    private void addNewVacancy(final AppCompatActivity activity){
+        NavigationUtils.replaceWithFragmentAndAddToBackStack(activity, R.id.frame_layout,
+                AnnouncementAddFragment.newInstance());
     }
 }
