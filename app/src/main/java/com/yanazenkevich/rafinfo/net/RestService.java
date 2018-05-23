@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.yanazenkevich.rafinfo.entities.Announcement;
 import com.yanazenkevich.rafinfo.entities.Department;
+import com.yanazenkevich.rafinfo.entities.Relation;
 import com.yanazenkevich.rafinfo.entities.Staff;
 import com.yanazenkevich.rafinfo.entities.User;
 import com.yanazenkevich.rafinfo.entities.Vacancy;
@@ -111,5 +112,13 @@ public class RestService {
 
     public Observable<Announcement> deleteAnnouncement(String id){
         return restApi.deleteAnnouncement(id);
+    }
+
+    public Observable<Vacancy> newVacancy (Vacancy vacancy) {
+        return restApi.newVacancy(vacancy);
+    }
+
+    public Observable<Integer> addRelation (String objectId, Relation relation) {
+        return restApi.addRelation(objectId, relation);
     }
 }

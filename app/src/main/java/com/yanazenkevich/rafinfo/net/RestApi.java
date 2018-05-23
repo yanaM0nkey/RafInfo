@@ -2,6 +2,7 @@ package com.yanazenkevich.rafinfo.net;
 
 import com.yanazenkevich.rafinfo.entities.Announcement;
 import com.yanazenkevich.rafinfo.entities.Department;
+import com.yanazenkevich.rafinfo.entities.Relation;
 import com.yanazenkevich.rafinfo.entities.Staff;
 import com.yanazenkevich.rafinfo.entities.User;
 import com.yanazenkevich.rafinfo.entities.Vacancy;
@@ -62,4 +63,10 @@ public interface RestApi {
 
     @DELETE("data/Announcements/{objectId}")
     Observable<Announcement> deleteAnnouncement(@Path("objectId") String id);
+
+    @POST("data/Vacancies")
+    Observable<Vacancy> newVacancy(@Body Vacancy vacancy);
+
+    @POST("data/Vacancies/{objectId}/employer")
+    Observable<Integer> addRelation(@Path("objectId") String id, @Body Relation relation);
 }

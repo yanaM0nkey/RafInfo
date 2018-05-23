@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.yanazenkevich.rafinfo.R;
 import com.yanazenkevich.rafinfo.base.BaseFragment;
 import com.yanazenkevich.rafinfo.entities.Vacancy;
+import com.yanazenkevich.rafinfo.interactions.VacancyNewUseCase;
+import com.yanazenkevich.rafinfo.interactions.VacancyRelationUseCase;
 import com.yanazenkevich.rafinfo.utils.ErrorUtils;
 import com.yanazenkevich.rafinfo.utils.NavigationUtils;
 
@@ -26,7 +28,9 @@ import io.reactivex.observers.DisposableObserver;
 public class VacancyAddFragment extends BaseFragment {
 
     private VacancyNewUseCase useCase;
+    private VacancyRelationUseCase relationUseCase;
     private Vacancy vacancy;
+    private String vacancyId;
     private View vProgress;
     private TextView tvSave;
     private TextInputEditText etTitle;
@@ -71,6 +75,7 @@ public class VacancyAddFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         useCase = new VacancyNewUseCase();
         vacancy = new Vacancy();
+        relationUseCase = new VacancyRelationUseCase();
         getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tvSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,19 +88,20 @@ public class VacancyAddFragment extends BaseFragment {
                     tlLocation.setError(null);
                     tlDescription.setError(null);
                     tlContactInfo.setError(null);
-                    newVacancy(getContext(), getBaseActivity());
+                    newVacancy(getContext());
+                    newRelation(getContext(), getBaseActivity());
                 }
             }
         });
     }
 
-    private void newVacancy(final Context context, final AppCompatActivity activity) {
+    private void newVacancy(final Context context) {
         useCase.execute(vacancy, new DisposableObserver<Vacancy>() {
             @Override
             public void onNext(@io.reactivex.annotations.NonNull Vacancy vacancy) {
-                showProgress(false);
-                NavigationUtils.replaceWithFragment(activity, R.id.frame_layout,
-                        VacanciesFragment.newInstance());
+                vacancyId = vacancy.getId();
+//                NavigationUtils.replaceWithFragment(activity, R.id.frame_layout,
+//                        VacanciesFragment.newInstance());
             }
 
             @Override
@@ -109,6 +115,29 @@ public class VacancyAddFragment extends BaseFragment {
                 useCase.dispose();
             }
         });
+    }
+
+    private void newRelation(final Context context, final Activity activity){
+        relationUseCase.execute(vacancy, new DisposableObserver<Vacancy>() {
+            @Override
+            public void onNext(@io.reactivex.annotations.NonNull Vacancy vacancy) {
+                vacancyId = vacancy.getId();
+//                NavigationUtils.replaceWithFragment(activity, R.id.frame_layout,
+//                        VacanciesFragment.newInstance());
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                showProgress(false);
+                ErrorUtils.errorHandling(context, e);
+            }
+
+            @Override
+            public void onComplete() {
+                useCase.dispose();
+            }
+        });
+    }
     }
 
     private void showProgress(boolean show) {
