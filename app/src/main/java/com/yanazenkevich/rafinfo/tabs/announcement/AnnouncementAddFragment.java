@@ -210,6 +210,7 @@ public class AnnouncementAddFragment extends BaseFragment implements DatePickerL
 
     private void hideKeyboard(){
         InputMethodManager inputMethodManager = (InputMethodManager) getBaseActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getBaseActivity().getCurrentFocus().getWindowToken(), 0);
+        if(inputMethodManager != null && getBaseActivity().getCurrentFocus() != null)
+            inputMethodManager.hideSoftInputFromWindow(getBaseActivity().getCurrentFocus().getWindowToken(), 0);
     }
 }

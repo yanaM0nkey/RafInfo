@@ -4,7 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.yanazenkevich.rafinfo.entities.Announcement;
 import com.yanazenkevich.rafinfo.entities.Department;
-import com.yanazenkevich.rafinfo.entities.Relation;
+import com.yanazenkevich.rafinfo.entities.Employer;
+import com.yanazenkevich.rafinfo.entities.RequestRelation;
 import com.yanazenkevich.rafinfo.entities.Staff;
 import com.yanazenkevich.rafinfo.entities.User;
 import com.yanazenkevich.rafinfo.entities.Vacancy;
@@ -118,7 +119,11 @@ public class RestService {
         return restApi.newVacancy(vacancy);
     }
 
-    public Observable<Integer> addRelation (String objectId, Relation relation) {
-        return restApi.addRelation(objectId, relation);
+    public Observable<Integer> addRelation (RequestRelation mRelation) {
+        return restApi.addRelation(mRelation.getObjectId(), mRelation.getmRelation());
+    }
+
+    public Observable<List<Employer>> getEmployers() {
+        return restApi.getEmployers();
     }
 }

@@ -2,6 +2,7 @@ package com.yanazenkevich.rafinfo.items;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ public class VacancyDetailsItem implements BaseListItem {
     private TextView tvEmployer;
     private TextView tvContactInfo;
     private TextView tvDescription;
+    private ImageView ivMore;
 
     public VacancyDetailsItem(Vacancy vacancy, BaseActivity activity) {
         this.vacancy = vacancy;
@@ -44,6 +46,7 @@ public class VacancyDetailsItem implements BaseListItem {
         tvEmployer = view.findViewById(R.id.ivd_employer);
         tvContactInfo = view.findViewById(R.id.ivd_contact_info);
         tvDescription = view.findViewById(R.id.ivd_description);
+        ivMore = view.findViewById(R.id.ivd_more);
     }
 
     @Override
@@ -52,15 +55,20 @@ public class VacancyDetailsItem implements BaseListItem {
         tvDescription.setText(vacancy.getDescription());
         tvLocation.setText(vacancy.getLocation());
         tvStatus.setText(DateUtils.getStatus(vacancy, context));
-        tvEmployer.setText(vacancy.getEmployer().getName());
         tvContactInfo.setText(vacancy.getContactInfo());
-        llEmployer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavigationUtils.replaceWithFragmentAndAddToBackStack(activity, R.id.frame_layout,
-                        EmployerFragment.newInstance(vacancy));
-            }
-        });
+        if(vacancy.getEmployer() != null){
+            ivMore.setVisibility(View.VISIBLE);
+            tvEmployer.setText(vacancy.getEmployer().getName());
+            llEmployer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    NavigationUtils.replaceWithFragmentAndAddToBackStack(activity, R.id.frame_layout,
+                            EmployerFragment.newInstance(vacancy));
+                }
+            });
+        }else{
+            ivMore.setVisibility(View.GONE);
+        }
     }
 
     public Vacancy getVacancy() {

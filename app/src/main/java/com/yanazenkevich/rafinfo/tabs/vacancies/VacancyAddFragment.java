@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 
 import com.yanazenkevich.rafinfo.R;
 import com.yanazenkevich.rafinfo.base.BaseFragment;
+import com.yanazenkevich.rafinfo.entities.Employer;
+import com.yanazenkevich.rafinfo.entities.RequestRelation;
 import com.yanazenkevich.rafinfo.entities.Vacancy;
 import com.yanazenkevich.rafinfo.interactions.VacancyNewUseCase;
 import com.yanazenkevich.rafinfo.interactions.VacancyRelationUseCase;
@@ -30,7 +33,7 @@ public class VacancyAddFragment extends BaseFragment {
     private VacancyNewUseCase useCase;
     private VacancyRelationUseCase relationUseCase;
     private Vacancy vacancy;
-    private String vacancyId;
+    private RequestRelation requestRelation;
     private View vProgress;
     private TextView tvSave;
     private TextInputEditText etTitle;
@@ -42,9 +45,13 @@ public class VacancyAddFragment extends BaseFragment {
     private TextInputLayout tlLocation;
     private TextInputLayout tlContactInfo;
     private TextInputEditText etEmployer;
+    private TextInputLayout tlEmployer;
 
-    public static VacancyAddFragment newInstance(){
-        return new VacancyAddFragment();
+    public static VacancyAddFragment newInstance(Vacancy vacancy, RequestRelation requestRelation){
+        VacancyAddFragment  fragment = new VacancyAddFragment();
+        fragment.requestRelation = requestRelation;
+        fragment.vacancy = vacancy;
+        return fragment;
     }
 
     @Nullable
@@ -62,21 +69,30 @@ public class VacancyAddFragment extends BaseFragment {
         tlDescription = view.findViewById(R.id.fav_description_layout);
         tlContactInfo = view.findViewById(R.id.fav_contact_layout);
         etEmployer = view.findViewById(R.id.fav_employer);
+        tlEmployer = view.findViewById(R.id.fav_employer_layout);
         return view;
     }
 
     @Override
     public String title() {
-        return getResources().getString(R.string.announcement_new);
+        return getResources().getString(R.string.vacancy_new);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         useCase = new VacancyNewUseCase();
-        vacancy = new Vacancy();
         relationUseCase = new VacancyRelationUseCase();
         getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setVacancy();
+        etEmployer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkData();
+                NavigationUtils.replaceWithFragment(getBaseActivity(), R.id.frame_layout,
+                        ListEmployersFragment.newInstance(vacancy, requestRelation));
+            }
+        });
         tvSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,20 +104,18 @@ public class VacancyAddFragment extends BaseFragment {
                     tlLocation.setError(null);
                     tlDescription.setError(null);
                     tlContactInfo.setError(null);
-                    newVacancy(getContext());
-                    newRelation(getContext(), getBaseActivity());
+                    newVacancy(getContext(), getBaseActivity());
                 }
             }
         });
     }
 
-    private void newVacancy(final Context context) {
+    private void newVacancy(final Context context, final AppCompatActivity activity) {
         useCase.execute(vacancy, new DisposableObserver<Vacancy>() {
             @Override
             public void onNext(@io.reactivex.annotations.NonNull Vacancy vacancy) {
-                vacancyId = vacancy.getId();
-//                NavigationUtils.replaceWithFragment(activity, R.id.frame_layout,
-//                        VacanciesFragment.newInstance());
+                requestRelation.setObjectId(vacancy.getId());
+                newRelation(context, activity);
             }
 
             @Override
@@ -117,13 +131,14 @@ public class VacancyAddFragment extends BaseFragment {
         });
     }
 
-    private void newRelation(final Context context, final Activity activity){
-        relationUseCase.execute(vacancy, new DisposableObserver<Vacancy>() {
+    private void newRelation(final Context context, final AppCompatActivity activity){
+        relationUseCase.execute(requestRelation, new DisposableObserver<Integer>() {
             @Override
-            public void onNext(@io.reactivex.annotations.NonNull Vacancy vacancy) {
-                vacancyId = vacancy.getId();
-//                NavigationUtils.replaceWithFragment(activity, R.id.frame_layout,
-//                        VacanciesFragment.newInstance());
+            public void onNext(@io.reactivex.annotations.NonNull Integer response) {
+                if(response == 1){
+                    NavigationUtils.replaceWithFragment(activity, R.id.frame_layout,
+                            VacanciesFragment.newInstance());
+                }
             }
 
             @Override
@@ -134,10 +149,9 @@ public class VacancyAddFragment extends BaseFragment {
 
             @Override
             public void onComplete() {
-                useCase.dispose();
+                relationUseCase.dispose();
             }
         });
-    }
     }
 
     private void showProgress(boolean show) {
@@ -151,37 +165,62 @@ public class VacancyAddFragment extends BaseFragment {
         vacancy.setContactInfo(etContactInfo.getText().toString().trim());
     }
 
+    private void setVacancy(){
+        etTitle.setText(vacancy.getName());
+        etDescription.setText(vacancy.getDescription());
+        etLocation.setText(vacancy.getLocation());
+        etContactInfo.setText(vacancy.getContactInfo());
+        if(vacancy.getEmployer().getName() != null){
+            etEmployer.setText(vacancy.getEmployer().getName());
+        }
+
+    }
+
     private boolean validate(Context context){
-        if (TextUtils.isEmpty(announcement.getTitle())) {
-            tlTitle.setError(context.getString(R.string.announcement_error_title_empty));
+        if (TextUtils.isEmpty(vacancy.getName())) {
+            tlTitle.setError(context.getString(R.string.vacancy_error_title_empty));
             tlLocation.setError(null);
-            tlDate.setError(null);
-            tlTime.setError(null);
+            tlDescription.setError(null);
+            tlContactInfo.setError(null);
+            tlEmployer.setError(null);
             etTitle.requestFocus();
             return false;
         }
-        if(announcement.getDate() == 0 && TextUtils.isEmpty(etDate.getText().toString().trim())){
+        if(TextUtils.isEmpty(vacancy.getLocation())){
             tlTitle.setError(null);
-            tlLocation.setError(null);
-            tlDate.setError(context.getString(R.string.announcement_error_date_empty));
-            tlTime.setError(null);
-            etDate.requestFocus();
-            return false;
-        }
-        if(announcement.getDate() == 0 && TextUtils.isEmpty(etTime.getText().toString().trim())){
-            tlTitle.setError(null);
-            tlLocation.setError(null);
-            tlDate.setError(null);
-            tlTime.setError(context.getString(R.string.announcement_error_time_empty));
-            etTime.requestFocus();
-            return false;
-        }
-        if(TextUtils.isEmpty(announcement.getLocation())){
-            tlTitle.setError(null);
-            tlLocation.setError(context.getString(R.string.announcement_error_time_empty));
-            tlDate.setError(null);
-            tlTime.setError(null);
+            tlLocation.setError(context.getString(R.string.vacancy_error_address_empty));
+            tlDescription.setError(null);
+            tlContactInfo.setError(null);
+            tlEmployer.setError(null);
             etLocation.requestFocus();
+            return false;
+        }
+
+        if(TextUtils.isEmpty(vacancy.getContactInfo())){
+            tlTitle.setError(null);
+            tlLocation.setError(null);
+            tlDescription.setError(null);
+            tlContactInfo.setError(context.getString(R.string.vacancy_error_contact_info_empty));
+            tlEmployer.setError(null);
+            etContactInfo.requestFocus();
+            return false;
+        }
+        if(vacancy.getEmployer() == null || TextUtils.isEmpty(vacancy.getEmployer().getName())){
+            tlTitle.setError(null);
+            tlLocation.setError(null);
+            tlDescription.setError(null);
+            tlContactInfo.setError(null);
+            tlEmployer.setError(context.getString(R.string.vacancy_error_employer_empty));
+            etEmployer.requestFocus();
+            return false;
+        }
+        if(TextUtils.isEmpty(vacancy.getDescription())){
+            tlTitle.setError(null);
+            tlLocation.setError(null);
+            tlDescription.setError(context.getString(R.string.vacancy_error_description_empty));
+            tlContactInfo.setError(null);
+            tlEmployer.setError(null);
+            etDescription.requestFocus();
             return false;
         }
         return true;
@@ -203,6 +242,7 @@ public class VacancyAddFragment extends BaseFragment {
 
     private void hideKeyboard(){
         InputMethodManager inputMethodManager = (InputMethodManager) getBaseActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getBaseActivity().getCurrentFocus().getWindowToken(), 0);
+        if(inputMethodManager != null && getBaseActivity().getCurrentFocus() != null)
+            inputMethodManager.hideSoftInputFromWindow(getBaseActivity().getCurrentFocus().getWindowToken(), 0);
     }
 }

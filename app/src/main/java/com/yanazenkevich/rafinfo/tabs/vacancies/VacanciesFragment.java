@@ -19,6 +19,8 @@ import com.yanazenkevich.rafinfo.R;
 import com.yanazenkevich.rafinfo.adapters.BaseRecyclerAdapter;
 import com.yanazenkevich.rafinfo.base.BaseFragment;
 import com.yanazenkevich.rafinfo.base.BaseListItem;
+import com.yanazenkevich.rafinfo.entities.Employer;
+import com.yanazenkevich.rafinfo.entities.RequestRelation;
 import com.yanazenkevich.rafinfo.entities.Vacancy;
 import com.yanazenkevich.rafinfo.interactions.VacancyUseCase;
 import com.yanazenkevich.rafinfo.items.VacancyItem;
@@ -135,7 +137,9 @@ public class VacanciesFragment extends BaseFragment {
     }
 
     private void addNewVacancy(final AppCompatActivity activity){
+        Vacancy vacancy = new Vacancy();
+        vacancy.setEmployer(new Employer());
         NavigationUtils.replaceWithFragmentAndAddToBackStack(activity, R.id.frame_layout,
-                AnnouncementAddFragment.newInstance());
+                VacancyAddFragment.newInstance(vacancy, new RequestRelation()));
     }
 }

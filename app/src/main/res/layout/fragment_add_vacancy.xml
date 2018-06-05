@@ -55,7 +55,6 @@
                     android:id="@+id/fav_address"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:focusable="false"
                     android:hint="@string/vacancy_address"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
 
@@ -77,7 +76,6 @@
                     android:id="@+id/fav_contact"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:focusable="false"
                     android:hint="@string/vacancy_contact"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
 

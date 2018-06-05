@@ -51,7 +51,7 @@
     <string name="announcement_description">Дополнительная информация</string>
     <string name="announcement_new">Новое объявление</string>
     <string name="announcement_error_title_empty">Пожалуйста, введите заголовок объявления</string>
-    <string name="announcement_error_date_empty">Пожалйста, выберите дату</string>
+    <string name="announcement_error_date_empty">Пожалуйста, выберите дату</string>
     <string name="announcement_error_time_empty">Пожалуйста, выберите время</string>
     <string name="announcement_error_location_empty">Пожалуйста, укажите место</string>
     <string name="announcement_edit">Редактирование объявления</string>
@@ -68,6 +68,14 @@
     <string name="vacancy_address">Адрес</string>
     <string name="vacancy_contact">Контактная информация</string>
     <string name="vacancy_employer">Работодатель</string>
+    <string name="vacancy_new">Новая вакансия</string>
+    <string name="vacancy_error_title_empty">Пожалуйста, введите заголовок вакансии</string>
+    <string name="vacancy_error_address_empty">Пожалуйста, укажите адрес</string>
+    <string name="vacancy_error_contact_info_empty">Пожалуйста, укажите контактные данные</string>
+    <string name="vacancy_error_employer_empty">Пожалуйста, выберете работодателя</string>
+    <string name="vacancy_error_description_empty">Пожалуйста, введите дополнительную информацию</string>
+    <string name="vacancy_edit">Редактирование вакансии</string>
+    <string name="vacancy_delete">Вы действительно хотите удалить эту вакансию?</string>
 
     <!--StaffInfo-->
     <string name="staff_info">Инфо</string>

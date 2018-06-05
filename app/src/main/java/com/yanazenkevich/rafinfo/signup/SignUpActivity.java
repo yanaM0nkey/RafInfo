@@ -22,8 +22,7 @@ public class SignUpActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        User user = new User();
-        final Fragment signUpFirstFragment = SignUpFirstFragment.newInstance(user);
+        final Fragment signUpFirstFragment = SignUpFirstFragment.newInstance(new User());
         NavigationUtils.addFragment(this,R.id.alo_fragment_container, signUpFirstFragment);
     }
 

@@ -53,7 +53,8 @@ public class VacancyItem implements BaseListItem {
         tvName.setText(vacancy.getName());
         tvLocation.setText(vacancy.getLocation());
         tvStatus.setText(DateUtils.getStatus(vacancy, context));
-        tvEmployer.setText(vacancy.getEmployer().getName());
+        if(vacancy.getEmployer() != null)
+            tvEmployer.setText(vacancy.getEmployer().getName());
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
