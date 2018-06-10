@@ -2,11 +2,13 @@ package com.yanazenkevich.rafinfo.tabs.vacancies;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -18,24 +20,29 @@ import android.widget.TextView;
 
 import com.yanazenkevich.rafinfo.R;
 import com.yanazenkevich.rafinfo.base.BaseFragment;
-import com.yanazenkevich.rafinfo.entities.Employer;
+import com.yanazenkevich.rafinfo.entities.Announcement;
+import com.yanazenkevich.rafinfo.entities.Relation;
 import com.yanazenkevich.rafinfo.entities.RequestRelation;
 import com.yanazenkevich.rafinfo.entities.Vacancy;
-import com.yanazenkevich.rafinfo.interactions.VacancyNewUseCase;
+import com.yanazenkevich.rafinfo.interactions.VacancyDeleteUseCase;
+import com.yanazenkevich.rafinfo.interactions.VacancyEditUseCase;
 import com.yanazenkevich.rafinfo.interactions.VacancyRelationUseCase;
+import com.yanazenkevich.rafinfo.tabs.announcement.AnnouncementFragment;
 import com.yanazenkevich.rafinfo.utils.ErrorUtils;
 import com.yanazenkevich.rafinfo.utils.NavigationUtils;
 
 import io.reactivex.observers.DisposableObserver;
 
-public class VacancyAddFragment extends BaseFragment {
+public class VacancyEditFragment extends BaseFragment {
 
-    private VacancyNewUseCase useCase;
+    private VacancyEditUseCase useCase;
+    private VacancyDeleteUseCase deleteUseCase;
     private VacancyRelationUseCase relationUseCase;
     private Vacancy vacancy;
     private RequestRelation requestRelation;
     private View vProgress;
     private TextView tvSave;
+    private TextView tvDelete;
     private TextInputEditText etTitle;
     private TextInputEditText etDescription;
     private TextInputEditText etLocation;
@@ -47,8 +54,8 @@ public class VacancyAddFragment extends BaseFragment {
     private TextInputEditText etEmployer;
     private TextInputLayout tlEmployer;
 
-    public static VacancyAddFragment newInstance(Vacancy vacancy, RequestRelation requestRelation){
-        VacancyAddFragment  fragment = new VacancyAddFragment();
+    public static VacancyEditFragment newInstance(Vacancy vacancy, RequestRelation requestRelation){
+        VacancyEditFragment  fragment = new VacancyEditFragment();
         fragment.requestRelation = requestRelation;
         fragment.vacancy = vacancy;
         return fragment;
@@ -57,31 +64,33 @@ public class VacancyAddFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_vacancy, container, false);
-        vProgress = view.findViewById(R.id.fav_progress_bar);
-        tvSave = view.findViewById(R.id.fav_save_button);
-        etTitle = view.findViewById(R.id.fav_title);
-        etLocation = view.findViewById(R.id.fav_address);
-        etDescription = view.findViewById(R.id.fav_description);
-        etContactInfo = view.findViewById(R.id.fav_contact);
-        tlTitle = view.findViewById(R.id.fav_title_layout);
-        tlLocation = view.findViewById(R.id.fav_address_layout);
-        tlDescription = view.findViewById(R.id.fav_description_layout);
-        tlContactInfo = view.findViewById(R.id.fav_contact_layout);
-        etEmployer = view.findViewById(R.id.fav_employer);
-        tlEmployer = view.findViewById(R.id.fav_employer_layout);
+        View view = inflater.inflate(R.layout.fragment_edit_vacancy, container, false);
+        vProgress = view.findViewById(R.id.fev_progress_bar);
+        tvSave = view.findViewById(R.id.fev_save_button);
+        tvDelete = view.findViewById(R.id.fev_delete_button);
+        etTitle = view.findViewById(R.id.fev_title);
+        etLocation = view.findViewById(R.id.fev_address);
+        etDescription = view.findViewById(R.id.fev_description);
+        etContactInfo = view.findViewById(R.id.fev_contact);
+        tlTitle = view.findViewById(R.id.fev_title_layout);
+        tlLocation = view.findViewById(R.id.fev_address_layout);
+        tlDescription = view.findViewById(R.id.fev_description_layout);
+        tlContactInfo = view.findViewById(R.id.fev_contact_layout);
+        etEmployer = view.findViewById(R.id.fev_employer);
+        tlEmployer = view.findViewById(R.id.fev_employer_layout);
         return view;
     }
 
     @Override
     public String title() {
-        return getResources().getString(R.string.vacancy_new);
+        return getResources().getString(R.string.vacancy_edit);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        useCase = new VacancyNewUseCase();
+        useCase = new VacancyEditUseCase();
+        deleteUseCase = new VacancyDeleteUseCase();
         relationUseCase = new VacancyRelationUseCase();
         getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setVacancy();
@@ -90,7 +99,7 @@ public class VacancyAddFragment extends BaseFragment {
             public void onClick(View view) {
                 checkData();
                 NavigationUtils.replaceWithFragment(getBaseActivity(), R.id.frame_layout,
-                        ListEmployersFragment.newInstance(vacancy, requestRelation, true));
+                        ListEmployersFragment.newInstance(vacancy, requestRelation, false));
             }
         });
         tvSave.setOnClickListener(new View.OnClickListener() {
@@ -104,13 +113,59 @@ public class VacancyAddFragment extends BaseFragment {
                     tlLocation.setError(null);
                     tlDescription.setError(null);
                     tlContactInfo.setError(null);
-                    newVacancy(getContext(), getBaseActivity());
+                    saveVacancy(getContext(), getBaseActivity());
                 }
+            }
+        });
+        tvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyboard();
+                createDialog(getContext());
             }
         });
     }
 
-    private void newVacancy(final Context context, final AppCompatActivity activity) {
+    private void createDialog(final Context context){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setMessage(getString(R.string.vacancy_delete));
+        dialog.setPositiveButton(getString(R.string.dialog_positive_button), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                showProgress(true);
+                deleteVacancy(getContext(), getBaseActivity());
+            };
+        });
+        dialog.setNegativeButton(getString(R.string.dialog_negative_button), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    private void deleteVacancy(final Context context, final AppCompatActivity activity) {
+        deleteUseCase.execute(vacancy.getId(), new DisposableObserver<Vacancy>() {
+            @Override
+            public void onNext(@io.reactivex.annotations.NonNull Vacancy vacancy) {
+                showProgress(false);
+                NavigationUtils.replaceWithFragment(activity, R.id.frame_layout,
+                        VacanciesFragment.newInstance());
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                showProgress(false);
+                ErrorUtils.errorHandling(context, e);
+            }
+
+            @Override
+            public void onComplete() {
+                deleteUseCase.dispose();
+            }
+        });
+    }
+
+    private void saveVacancy(final Context context, final AppCompatActivity activity) {
         useCase.execute(vacancy, new DisposableObserver<Vacancy>() {
             @Override
             public void onNext(@io.reactivex.annotations.NonNull Vacancy vacancy) {
@@ -132,6 +187,11 @@ public class VacancyAddFragment extends BaseFragment {
     }
 
     private void newRelation(final Context context, final AppCompatActivity activity){
+        if(requestRelation.getmRelation() == null){
+            Relation relation = new Relation();
+            relation.setObjectId(vacancy.getEmployer().getId());
+            requestRelation.setmRelation(relation);
+        }
         relationUseCase.execute(requestRelation, new DisposableObserver<Integer>() {
             @Override
             public void onNext(@io.reactivex.annotations.NonNull Integer response) {
@@ -170,7 +230,7 @@ public class VacancyAddFragment extends BaseFragment {
         etDescription.setText(vacancy.getDescription());
         etLocation.setText(vacancy.getLocation());
         etContactInfo.setText(vacancy.getContactInfo());
-        if(vacancy.getEmployer().getName() != null){
+        if(vacancy.getEmployer() != null && vacancy.getEmployer().getName() != null){
             etEmployer.setText(vacancy.getEmployer().getName());
         }
 
@@ -232,8 +292,8 @@ public class VacancyAddFragment extends BaseFragment {
         if (item != null && vacancy != null) {
             switch (item.getItemId()) {
                 case android.R.id.home: {
+                    NavigationUtils.removeFragment(getBaseActivity(), VacancyEditFragment.this);
                     getBaseActivity().onBackPressed();
-                    NavigationUtils.removeFragment(getBaseActivity(), VacancyAddFragment.this);
                     return true;
                 }
             }

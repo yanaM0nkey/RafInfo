@@ -17,6 +17,7 @@ import com.yanazenkevich.rafinfo.entities.Relation;
 import com.yanazenkevich.rafinfo.entities.RequestRelation;
 import com.yanazenkevich.rafinfo.entities.Vacancy;
 import com.yanazenkevich.rafinfo.tabs.vacancies.VacancyAddFragment;
+import com.yanazenkevich.rafinfo.tabs.vacancies.VacancyEditFragment;
 import com.yanazenkevich.rafinfo.utils.NavigationUtils;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.List;
 public class EmployerOfListItem implements BaseListItem {
 
     private final Employer employer;
+    private final boolean isNew;
     private Vacancy vacancy;
     private  RequestRelation requestRelation;
     private final BaseActivity activity;
@@ -32,11 +34,13 @@ public class EmployerOfListItem implements BaseListItem {
     private ImageView ivAction;
     private ConstraintLayout layout;
 
-    public EmployerOfListItem(Employer employer, Vacancy vacancy, RequestRelation requestRelation, BaseActivity activity) {
+    public EmployerOfListItem(Employer employer, Vacancy vacancy, RequestRelation requestRelation,
+                              BaseActivity activity, boolean isNew) {
         this.employer = employer;
         this.vacancy = vacancy;
         this.requestRelation = requestRelation;
         this.activity = activity;
+        this.isNew = isNew;
     }
 
     @Override
@@ -68,25 +72,26 @@ public class EmployerOfListItem implements BaseListItem {
                     Relation relation = new Relation();
                     relation.setObjectId(employer.getId());
                     requestRelation.setmRelation(relation);
-                    NavigationUtils.replaceWithFragment(activity, R.id.frame_layout,
-                            VacancyAddFragment.newInstance(vacancy, requestRelation));
-//                if(SignUpActivity.class.getName().contains(activity.getLocalClassName())){
-//                    NavigationUtils.replaceWithFragment(activity, R.id.alo_fragment_container, SignUpFirstFragment.newInstance(user));
-//                }else{
-//                    NavigationUtils.replaceWithFragment(activity, R.id.frame_layout, EditPersonalInfoFragment.newInstance(context, user));
-//                }
+                    if(isNew){
+                        NavigationUtils.replaceWithFragment(activity, R.id.frame_layout,
+                                VacancyAddFragment.newInstance(vacancy, requestRelation));
+                    }else{
+                        NavigationUtils.replaceWithFragment(activity, R.id.frame_layout,
+                                VacancyEditFragment.newInstance(vacancy, requestRelation));
+                    }
                 }
             });
         }
     }
 
     @NonNull
-    public static List<BaseListItem> getItems(@Nullable List<Employer> employers, Vacancy vacancy, RequestRelation requestRelation, BaseActivity activity) {
+    public static List<BaseListItem> getItems(@Nullable List<Employer> employers, Vacancy vacancy,
+                                              RequestRelation requestRelation, BaseActivity activity, boolean isNew) {
         List<BaseListItem> items = new ArrayList<>();
         if (employers != null) {
             for (int i = 0; i < employers.size(); i++) {
                 Employer employer = employers.get(i);
-                items.add(new EmployerOfListItem(employer, vacancy, requestRelation, activity));
+                items.add(new EmployerOfListItem(employer, vacancy, requestRelation, activity, isNew));
             }
         }
         return items;

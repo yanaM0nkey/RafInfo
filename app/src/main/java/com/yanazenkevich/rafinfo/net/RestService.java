@@ -126,4 +126,12 @@ public class RestService {
     public Observable<List<Employer>> getEmployers() {
         return restApi.getEmployers();
     }
+
+    public Observable<Vacancy> editVacancy(Vacancy vacancy){
+        return restApi.editVacancy(vacancy.getId(), vacancy);
+    }
+
+    public Observable<Vacancy> deleteVacancy(String id){
+        return restApi.deleteVacancy(id);
+    }
 }

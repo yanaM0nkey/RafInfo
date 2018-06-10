@@ -31,15 +31,17 @@ public class ListEmployersFragment extends BaseFragment {
 
     private Vacancy vacancy;
     private RequestRelation requestRelation;
+    private boolean isNew;
     private EmployersUseCase useCase;
     private BaseRecyclerAdapter adapter;
     private RecyclerView recyclerView;
     private View vProgress;
 
-    public static ListEmployersFragment newInstance(Vacancy vacancy, RequestRelation requestRelation) {
+    public static ListEmployersFragment newInstance(Vacancy vacancy, RequestRelation requestRelation, boolean isNew) {
         ListEmployersFragment fragment = new ListEmployersFragment();
         fragment.vacancy = vacancy;
         fragment.requestRelation = requestRelation;
+        fragment.isNew = isNew;
         return fragment;
     }
 
@@ -55,6 +57,7 @@ public class ListEmployersFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         useCase = new EmployersUseCase();
         showProgress(true);
         adapter = new BaseRecyclerAdapter(getActivity());
@@ -87,7 +90,7 @@ public class ListEmployersFragment extends BaseFragment {
 
     private void showItems(List<Employer> employers, final BaseActivity activity) {
         if (employers.size() != 0) {
-            final List<BaseListItem> items = new ArrayList<>(EmployerOfListItem.getItems(employers, vacancy, requestRelation, activity));
+            final List<BaseListItem> items = new ArrayList<>(EmployerOfListItem.getItems(employers, vacancy, requestRelation, activity, isNew));
             adapter.replaceElements(items);
             adapter.notifyDataSetChanged();
         } else {

@@ -25,4 +25,9 @@ public class NavigationUtils {
         fragmentTransaction.commit();
     }
 
+    public static void removeFragment(AppCompatActivity activity, Fragment fragment){
+        FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.remove(fragment);
+        fragmentTransaction.commit();
+    }
 }

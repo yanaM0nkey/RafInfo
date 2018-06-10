@@ -101,7 +101,7 @@ public class VacanciesFragment extends BaseFragment {
 
     private void showItems(List<Vacancy> vacancies) {
         if (vacancies.size() != 0) {
-            final List<BaseListItem> items = new ArrayList<>(VacancyItem.getItems(vacancies, getBaseActivity()));
+            final List<BaseListItem> items = new ArrayList<>(VacancyItem.getItems(vacancies, getBaseActivity(), isAdmin));
             adapter.replaceElements(items);
             adapter.notifyDataSetChanged();
         } else {
