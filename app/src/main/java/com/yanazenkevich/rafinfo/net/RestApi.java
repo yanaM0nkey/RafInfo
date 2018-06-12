@@ -32,10 +32,10 @@ public interface RestApi {
     @POST("users/register")
     Observable<User> signUp(@Body User user);
 
-    @GET("data/Announcements?sortBy=started%20desc")
+    @GET("data/Announcements?pageSize=100&sortBy=started%20desc")
     Observable<List<Announcement>> getAnnouncements();
 
-    @GET("data/Vacancies?sortBy=created%20desc%2Cupdated%20desc")
+    @GET("data/Vacancies?pageSize=100&sortBy=created%20desc%2Cupdated%20desc")
     Observable<List<Vacancy>> getVacancies();
 
     @GET("data/Users/{objectId}")
@@ -79,5 +79,14 @@ public interface RestApi {
 
     @DELETE("data/Vacancies/{objectId}")
     Observable<Vacancy> deleteVacancy(@Path("objectId") String id);
+
+    @POST("data/StaffInfo")
+    Observable<Staff> newStaff(@Body Staff staff);
+
+    @PUT("data/StaffInfo/{objectId}")
+    Observable<Staff> editStaff(@Path("objectId") String id, @Body Staff staff);
+
+    @DELETE("data/StaffInfo/{objectId}")
+    Observable<Staff> deleteStaff(@Path("objectId") String id);
 
 }

@@ -6,10 +6,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,16 +32,20 @@ import com.yanazenkevich.rafinfo.interactions.StaffInfoUseCase;
 import com.yanazenkevich.rafinfo.items.EmptySearchItem;
 import com.yanazenkevich.rafinfo.items.StaffItem;
 import com.yanazenkevich.rafinfo.utils.ErrorUtils;
+import com.yanazenkevich.rafinfo.utils.NavigationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.observers.DisposableObserver;
 
+import static com.yanazenkevich.rafinfo.interactions.AuthService.KEY_ADMIN;
 import static com.yanazenkevich.rafinfo.interactions.AuthService.KEY_DEPARTMENT;
 import static com.yanazenkevich.rafinfo.interactions.AuthService.SHARED_PREFS_NAME;
 
 public class StaffInfoFragment extends BaseFragment {
+
+    private static final int MENU_ITEM_ADD_KEY = 35;
 
     private static String searchText;
     private StaffInfoUseCase useCase;
@@ -49,6 +57,7 @@ public class StaffInfoFragment extends BaseFragment {
     private Spinner navigationSpinner;
     private SearchView searchView;
     private int selectedDepartment;
+    private boolean isAdmin;
     private final Handler handler = new Handler();
     private final Runnable searchRunnable = new Runnable() {
         @Override
@@ -118,6 +127,8 @@ public class StaffInfoFragment extends BaseFragment {
                 return true;
             }
         });
+        isAdmin = preferences.getBoolean(KEY_ADMIN, false);
+        getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     @Override
@@ -158,11 +169,12 @@ public class StaffInfoFragment extends BaseFragment {
 
     private void showItems(List<Staff> staffInfo){
         if (staffInfo.size() != 0) {
-            final List<BaseListItem> items = new ArrayList<>(StaffItem.getItems(staffInfo));
+            final List<BaseListItem> items = new ArrayList<>(StaffItem.getItems(staffInfo, getBaseActivity(), isAdmin));
             adapter.replaceElements(items);
             adapter.notifyDataSetChanged();
         } else {
             adapter.clear();
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -203,4 +215,33 @@ public class StaffInfoFragment extends BaseFragment {
         adapter.replaceElements(items);
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        if(isAdmin) {
+            MenuItem item = menu.add(0, MENU_ITEM_ADD_KEY, Menu.NONE, "Add");
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            item.setIcon(R.drawable.ic_add);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item != null) {
+            switch (item.getItemId()) {
+                case MENU_ITEM_ADD_KEY: {
+                    addNewStaff(getBaseActivity());
+                    return true;
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void addNewStaff(final AppCompatActivity activity){
+        NavigationUtils.replaceWithFragmentAndAddToBackStack(activity, R.id.frame_layout,
+                StaffAddFragment.newInstance(new Staff()));
+    }
+
 }

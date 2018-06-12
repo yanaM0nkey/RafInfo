@@ -47,7 +47,7 @@ public class Announcement {
     }
 
     public void setDescription(String description) {
-        description = description;
+        this.description = description;
     }
 
     public long getCreated() {

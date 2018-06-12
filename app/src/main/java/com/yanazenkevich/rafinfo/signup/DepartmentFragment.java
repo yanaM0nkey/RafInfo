@@ -16,9 +16,11 @@ import com.yanazenkevich.rafinfo.base.BaseActivity;
 import com.yanazenkevich.rafinfo.base.BaseFragment;
 import com.yanazenkevich.rafinfo.base.BaseListItem;
 import com.yanazenkevich.rafinfo.entities.Department;
+import com.yanazenkevich.rafinfo.entities.Staff;
 import com.yanazenkevich.rafinfo.entities.User;
 import com.yanazenkevich.rafinfo.interactions.DepartmentUseCase;
 import com.yanazenkevich.rafinfo.items.DepartmentItem;
+import com.yanazenkevich.rafinfo.items.DepartmentStaffItem;
 import com.yanazenkevich.rafinfo.utils.ErrorUtils;
 
 import java.util.ArrayList;
@@ -28,15 +30,23 @@ import io.reactivex.observers.DisposableObserver;
 
 public class DepartmentFragment extends BaseFragment {
 
+    public static final int ACTION_USER = 0;
+    public static final int ACTION_ADD = 1;
+    public static final int ACTION_EDIT = 2;
+
+    private int action;
     private User user;
+    private Staff staff;
     private DepartmentUseCase useCase;
     private BaseRecyclerAdapter adapter;
     private RecyclerView recyclerView;
     private View vProgress;
 
-    public static DepartmentFragment newInstance(User user) {
+    public static DepartmentFragment newInstance(@Nullable User user, @Nullable Staff staff, int action) {
         DepartmentFragment fragment = new DepartmentFragment();
         fragment.user = user;
+        fragment.action = action;
+        fragment.staff = staff;
         return fragment;
     }
 
@@ -59,6 +69,8 @@ public class DepartmentFragment extends BaseFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         getDepartments(getContext());
+        if(getBaseActivity().getSupportActionBar() != null)
+             getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     private void getDepartments(final Context context) {
@@ -84,7 +96,13 @@ public class DepartmentFragment extends BaseFragment {
 
     private void showItems(List<Department> departments, final BaseActivity activity) {
         if (departments.size() != 0) {
-            final List<BaseListItem> items = new ArrayList<>(DepartmentItem.getItems(departments, user, activity));
+            List<BaseListItem> items;
+            if(action == ACTION_USER){
+                items = new ArrayList<>(DepartmentItem.getItems(departments, user, activity));
+            }else{
+                items = new ArrayList<>(DepartmentStaffItem.getItems(departments, staff, activity, action));
+            }
+
             adapter.replaceElements(items);
             adapter.notifyDataSetChanged();
         } else {

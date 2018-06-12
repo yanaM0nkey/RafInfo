@@ -94,7 +94,7 @@ public class EditPersonalInfoFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 checkData();
-                NavigationUtils.replaceWithFragment(getBaseActivity(), R.id.frame_layout, DepartmentFragment.newInstance(user));
+                NavigationUtils.replaceWithFragment(getBaseActivity(), R.id.frame_layout, DepartmentFragment.newInstance(user, null, 0));
             }
         });
         tvSaveButton.setOnClickListener(new View.OnClickListener() {

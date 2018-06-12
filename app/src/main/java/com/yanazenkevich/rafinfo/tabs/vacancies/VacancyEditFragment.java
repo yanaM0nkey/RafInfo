@@ -20,14 +20,12 @@ import android.widget.TextView;
 
 import com.yanazenkevich.rafinfo.R;
 import com.yanazenkevich.rafinfo.base.BaseFragment;
-import com.yanazenkevich.rafinfo.entities.Announcement;
 import com.yanazenkevich.rafinfo.entities.Relation;
 import com.yanazenkevich.rafinfo.entities.RequestRelation;
 import com.yanazenkevich.rafinfo.entities.Vacancy;
 import com.yanazenkevich.rafinfo.interactions.VacancyDeleteUseCase;
 import com.yanazenkevich.rafinfo.interactions.VacancyEditUseCase;
 import com.yanazenkevich.rafinfo.interactions.VacancyRelationUseCase;
-import com.yanazenkevich.rafinfo.tabs.announcement.AnnouncementFragment;
 import com.yanazenkevich.rafinfo.utils.ErrorUtils;
 import com.yanazenkevich.rafinfo.utils.NavigationUtils;
 

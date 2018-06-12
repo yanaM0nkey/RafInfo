@@ -135,6 +135,7 @@ public class VacancyAddFragment extends BaseFragment {
         relationUseCase.execute(requestRelation, new DisposableObserver<Integer>() {
             @Override
             public void onNext(@io.reactivex.annotations.NonNull Integer response) {
+                showProgress(false);
                 if(response == 1){
                     NavigationUtils.replaceWithFragment(activity, R.id.frame_layout,
                             VacanciesFragment.newInstance());

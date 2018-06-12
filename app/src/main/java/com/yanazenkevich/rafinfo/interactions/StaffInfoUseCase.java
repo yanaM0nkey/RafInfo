@@ -16,7 +16,7 @@ public class StaffInfoUseCase extends UseCase<String, List<Staff>> {
     }
 
     private String generateLink(String department) {
-        return "data/StaffInfo?where=department" + "%3D" +
+        return "data/StaffInfo?pageSize=100&where=department" + "%3D" +
                 department +
                 "&sortBy=created%20asc";
     }

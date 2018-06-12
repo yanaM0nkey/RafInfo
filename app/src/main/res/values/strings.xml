@@ -92,6 +92,25 @@
     <string name="staff_position">%1$s, %2$s</string>
     <string name="staff_search">Поиск по фамилии</string>
     <string name="staff_empty_search">Сотрудника c такой фамилией не найдено.\nПопробуйте еще раз</string>
+    <string name="staff_surname">Фамилия</string>
+    <string name="staff_name">Имя</string>
+    <string name="staff_patronymic">Отчество</string>
+    <string name="staff_department">Кафедра</string>
+    <string name="staff_position_edit">Должность</string>
+    <string name="staff_description">Дополнительная информация</string>
+    <string name="staff_phone_number">Номер телефона</string>
+    <string name="staff_email">Email</string>
+    <string name="staff_address">Адрес</string>
+    <string name="staff_error_surname_empty">Пожалуйста, введите фамилию</string>
+    <string name="staff_error_name_empty">Пожалуйста, введите имя</string>
+    <string name="staff_error_patronymic_empty">Пожалуйста, введите отчество</string>
+    <string name="staff_error_position_empty">Пожалуйста, введите должность</string>
+    <string name="staff_error_department_empty">Пожалуйста, выберите кафедру</string>
+    <string name="staff_new">Новый сотрудник</string>
+    <string name="staff_edit">Редактирование инфо о сотруднике</string>
+    <string name="staff_delete">Вы действительно хотите удалить информацию об этом сотруднике?</string>
+    <string name="staff_full_name">%1$s %2$s %3$s</string>
+
 
     <!--Settings-->
     <string name="settings">Настройки</string>

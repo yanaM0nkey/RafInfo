@@ -67,7 +67,7 @@ public class SignUpFirstFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 checkData();
-                NavigationUtils.replaceWithFragmentAndAddToBackStack(getBaseActivity(), R.id.alo_fragment_container, DepartmentFragment.newInstance(user));
+                NavigationUtils.replaceWithFragmentAndAddToBackStack(getBaseActivity(), R.id.alo_fragment_container, DepartmentFragment.newInstance(user, null, 0));
             }
         });
         tvNextButton.setOnClickListener(new View.OnClickListener() {

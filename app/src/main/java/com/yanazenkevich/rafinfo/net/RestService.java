@@ -134,4 +134,16 @@ public class RestService {
     public Observable<Vacancy> deleteVacancy(String id){
         return restApi.deleteVacancy(id);
     }
+
+    public Observable<Staff> newStaff (Staff staff) {
+        return restApi.newStaff(staff);
+    }
+
+    public Observable<Staff> editStaff(Staff staff){
+        return restApi.editStaff(staff.getId(), staff);
+    }
+
+    public Observable<Staff> deleteStaff(String id){
+        return restApi.deleteStaff(id);
+    }
 }

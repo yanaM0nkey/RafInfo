@@ -215,7 +215,7 @@ public class AnnouncementEditFragment extends BaseFragment implements DatePicker
         }
         if(TextUtils.isEmpty(announcement.getLocation())){
             tlTitle.setError(null);
-            tlLocation.setError(context.getString(R.string.announcement_error_time_empty));
+            tlLocation.setError(context.getString(R.string.announcement_error_location_empty));
             tlDate.setError(null);
             tlTime.setError(null);
             etLocation.requestFocus();
