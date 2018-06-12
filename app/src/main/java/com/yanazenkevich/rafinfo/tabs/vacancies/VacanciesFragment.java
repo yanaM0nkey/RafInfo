@@ -106,6 +106,7 @@ public class VacanciesFragment extends BaseFragment {
             adapter.notifyDataSetChanged();
         } else {
             adapter.clear();
+            adapter.notifyDataSetChanged();
         }
     }
 

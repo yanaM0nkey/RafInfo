@@ -15,21 +15,42 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/fs_personal_info"
+        android:id="@+id/fs_personal_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="4dp"
+        android:drawableStart="@drawable/ic_person"
+        android:gravity="center_vertical"
+        android:paddingBottom="8dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:text="@string/settings_personal_info"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorPrimaryDark" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lightGrey" />
+
+        <TextView
+            android:id="@+id/fs_employer_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawablePadding="4dp"
-            android:drawableStart="@drawable/ic_person"
+            android:drawableStart="@drawable/ic_employer_name"
             android:gravity="center_vertical"
             android:paddingBottom="8dp"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"
             android:paddingTop="8dp"
-            android:text="@string/settings_personal_info"
+            android:text="@string/settings_employer_info"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@color/colorPrimaryDark" />
 
         <View
+            android:id="@+id/fs_divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/lightGrey" />

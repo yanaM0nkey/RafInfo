@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/fea_save_button"
+        app:layout_constraintBottom_toTopOf="@+id/fee_save_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/fea_title_layout"
+                android:id="@+id/fee_title_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
@@ -32,10 +32,31 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/fea_title"
+                    android:id="@+id/fee_title"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/announcement_title"
+                    android:hint="@string/settings_employer"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/fee_email_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="24dp"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fee_title_layout">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/fee_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/settings_email"
                     android:inputType="text"
                     android:maxLines="1"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
@@ -43,7 +64,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/fea_date_layout"
+                android:id="@+id/fee_description_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
@@ -52,81 +73,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fea_title_layout">
+                app:layout_constraintTop_toBottomOf="@+id/fee_email_layout">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/fea_date"
+                    android:id="@+id/fee_description"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:focusable="false"
-                    android:hint="@string/announcement_date_time"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/fea_time_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginStart="24dp"
-                app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fea_date_layout">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/fea_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:focusable="false"
-                    android:hint="@string/announcement_time"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/fea_location_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginStart="24dp"
-                app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fea_time_layout">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/fea_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/announcement_place"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
-
-            </android.support.design.widget.TextInputLayout>
-
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/fea_description_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginStart="24dp"
-                app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fea_location_layout">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/fea_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/announcement_description"
+                    android:hint="@string/settings_description"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
 
             </android.support.design.widget.TextInputLayout>
@@ -135,7 +88,7 @@
     </ScrollView>
 
     <TextView
-        android:id="@+id/fea_save_button"
+        android:id="@+id/fee_save_button"
         android:layout_width="256dp"
         android:layout_height="43dp"
         android:layout_marginEnd="8dp"
@@ -146,13 +99,13 @@
         android:text="@string/button_save"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/fea_delete_button"
+        app:layout_constraintBottom_toTopOf="@+id/fee_delete_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="341dp" />
 
     <TextView
-        android:id="@+id/fea_delete_button"
+        android:id="@+id/fee_delete_button"
         android:layout_width="256dp"
         android:layout_height="43dp"
         android:layout_marginBottom="24dp"
@@ -171,7 +124,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <ProgressBar
-        android:id="@+id/fea_progress_bar"
+        android:id="@+id/fee_progress_bar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

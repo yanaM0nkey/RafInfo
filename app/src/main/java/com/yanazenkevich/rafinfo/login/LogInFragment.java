@@ -1,18 +1,24 @@
 package com.yanazenkevich.rafinfo.login;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yanazenkevich.rafinfo.R;
 import com.yanazenkevich.rafinfo.base.BaseFragment;
@@ -20,6 +26,7 @@ import com.yanazenkevich.rafinfo.entities.AuthState;
 import com.yanazenkevich.rafinfo.entities.User;
 import com.yanazenkevich.rafinfo.interactions.AuthService;
 import com.yanazenkevich.rafinfo.interactions.LogInUseCase;
+import com.yanazenkevich.rafinfo.interactions.NewPasswordUseCase;
 import com.yanazenkevich.rafinfo.interactions.ValidateUseCase;
 import com.yanazenkevich.rafinfo.signup.SignUpActivity;
 import com.yanazenkevich.rafinfo.tabs.HomeActivity;
@@ -27,6 +34,7 @@ import com.yanazenkevich.rafinfo.utils.ErrorUtils;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
+import retrofit2.Response;
 
 import static com.yanazenkevich.rafinfo.interactions.AuthService.KEY_ACCESS_TOKEN;
 import static com.yanazenkevich.rafinfo.interactions.AuthService.SHARED_PREFS_NAME;
@@ -43,11 +51,15 @@ public class LogInFragment extends BaseFragment{
     private TextInputLayout tlPassword;
     private TextView tvLogInButton;
     private TextView tvSignIn;
+    private TextView tvPassword;
+
+    private EditText input;
 
     private Disposable logInDisposable;
     private AuthService authService;
     private LogInUseCase useCase;
     private ValidateUseCase validateUseCase;
+    private NewPasswordUseCase passwordUseCase;
 
     private boolean isValidate;
 
@@ -66,6 +78,7 @@ public class LogInFragment extends BaseFragment{
         tlPassword = view.findViewById(R.id.fl_password_layout);
         tvLogInButton = view.findViewById(R.id.fl_login_button);
         tvSignIn = view.findViewById(R.id.fl_sign_in_button);
+        tvPassword = view.findViewById(R.id.fl_password_button);
         return view;
     }
 
@@ -75,6 +88,7 @@ public class LogInFragment extends BaseFragment{
         authService = new AuthService(getContext());
         useCase = new LogInUseCase(authService);
         validateUseCase = new ValidateUseCase();
+        passwordUseCase = new NewPasswordUseCase();
 
         tvLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +111,13 @@ public class LogInFragment extends BaseFragment{
                 startActivity(SignUpActivity.getLaunchIntent(getContext()));
             }
         });
+
+        tvPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createDialog();
+            }
+        });
     }
 
     @Override
@@ -111,6 +132,57 @@ public class LogInFragment extends BaseFragment{
             public void onError(@io.reactivex.annotations.NonNull Throwable e) {}
             @Override
             public void onComplete() {}
+        });
+    }
+
+    private void createDialog(){
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getBaseActivity());
+        alertDialog.setMessage(getString(R.string.sign_up_password_message));
+
+        input = new EditText(getBaseActivity());
+        alertDialog.setView(input);
+
+        alertDialog.setPositiveButton(getString(R.string.ok_button),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String login = input.getText().toString().trim();
+                        if (login.compareTo("") == 0) {
+                            Toast.makeText(getContext(),
+                                    getString(R.string.empty_edit), Toast.LENGTH_SHORT).show();
+                        }else{
+                            newPassword(getContext());
+                        }
+                    }
+                });
+
+        alertDialog.setNegativeButton(R.string.cancel_button,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog.show();
+    }
+
+    private void newPassword(final Context context){
+        passwordUseCase.execute(input.getText().toString().trim(), new DisposableObserver<Response<Void>>() {
+            @Override
+            public void onNext(@io.reactivex.annotations.NonNull Response<Void> response) {
+                Toast.makeText(getContext(),
+                        getString(R.string.mail), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                showProgress(false);
+                ErrorUtils.errorHandling(context, e);
+            }
+
+            @Override
+            public void onComplete() {
+                passwordUseCase.dispose();
+            }
         });
     }
 

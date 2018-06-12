@@ -22,6 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/sign_up_name"
+            android:inputType="text"
+            android:maxLines="1"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
 
     </android.support.design.widget.TextInputLayout>
@@ -43,6 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/sign_up_surname"
+            android:inputType="text"
+            android:maxLines="1"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
 
     </android.support.design.widget.TextInputLayout>

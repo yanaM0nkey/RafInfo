@@ -89,4 +89,16 @@ public interface RestApi {
     @DELETE("data/StaffInfo/{objectId}")
     Observable<Staff> deleteStaff(@Path("objectId") String id);
 
+    @POST("data/Employer")
+    Observable<Employer> newEmployer(@Body Employer employer);
+
+    @PUT("data/Employer/{objectId}")
+    Observable<Employer> editEmployer(@Path("objectId") String id, @Body Employer employer);
+
+    @DELETE("data/Employer/{objectId}")
+    Observable<Employer> deleteEmployer(@Path("objectId") String id);
+
+    @GET("users/restorepassword/{login}")
+    Observable<Response<Void>> newPassword(@Path("login") String login);
+
 }

@@ -10,6 +10,11 @@
     <string name="dialog_negative_button">Нет</string>
     <string name="button_save">Сохранить</string>
     <string name="button_delete">Удалить</string>
+    <string name="employers">Работодатели</string>
+    <string name="ok_button">OK</string>
+    <string name="cancel_button">Отмена</string>
+    <string name="empty_edit">Поле ввода пустое</string>
+    <string name="mail">Проверьте Вашу почту</string>
 
     <!--Log in-->
     <string name="log_in_title">Белорусский государственный университет</string>
@@ -27,6 +32,7 @@
     <string name="sign_up_surname">Фамилия</string>
     <string name="sign_up_email">Email</string>
     <string name="sign_up_button">Зарегистрироваться</string>
+    <string name="sign_up_password_new">Забыли пароль?</string>
     <string name="sign_up_tv">Укажите свои данные</string>
     <string name="sign_up_error_name_empty">Пожалуйста, введите имя</string>
     <string name="sign_up_error_surname_empty">Пожалуйста, введите фамилию</string>
@@ -38,6 +44,7 @@
     <string name="sign_up_validate_password">Пароли не совпадают</string>
     <string name="sign_up_same_login">Пользователь с таким логином уже существует</string>
     <string name="sign_up_ok">Регистрация прошла успешно</string>
+    <string name="sign_up_password_message">Введите Ваш логин, и на указанный при регистрации email придет новый пароль</string>
 
     <!--Announcement-->
     <string name="announcement">Объявления</string>
@@ -119,7 +126,16 @@
     <string name="settings_personal_info_title">Персональные данные</string>
     <string name="settings_save_toast">Данные сохранены</string>
     <string name="settings_dialog_title">Вы действительно хотите выйти?</string>
-
-
+    <string name="settings_employer_info">Изменить данные о работодателях</string>
+    <string name="settings_employer">Компания</string>
+    <string name="settings_email">Сайт</string>
+    <string name="settings_description">Дополнительная информация</string>
+    <string name="settings_new_employer">Новый работодатель</string>
+    <string name="settings_edit_employer">Редактирование работодателя</string>
+    <string name="settings_delete_employer">Вы действительно хотите удалить информацию об этом работодателе?</string>
+    <string name="settings_error_title_empty">Пожалуйста, укажите компанию</string>
+    <string name="settings_error_site_empty">Пожалуйста, укажите сайт</string>
+    <string name="settings_error_info_empty">Пожалуйста, введите дополнительную информацию</string>
+    <string name="settings_wrong_email">Неверный формат</string>
 
 </resources>

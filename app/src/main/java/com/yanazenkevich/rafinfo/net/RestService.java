@@ -146,4 +146,20 @@ public class RestService {
     public Observable<Staff> deleteStaff(String id){
         return restApi.deleteStaff(id);
     }
+
+    public Observable<Employer> newEmployer (Employer employer) {
+        return restApi.newEmployer(employer);
+    }
+
+    public Observable<Employer> editEmployer(Employer employer){
+        return restApi.editEmployer(employer.getId(), employer);
+    }
+
+    public Observable<Employer> deleteEmployer(String id){
+        return restApi.deleteEmployer(id);
+    }
+
+    public Observable<Response<Void>> newPassword(String login) {
+        return restApi.newPassword(login);
+    }
 }

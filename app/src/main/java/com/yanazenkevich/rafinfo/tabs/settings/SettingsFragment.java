@@ -27,6 +27,7 @@ import io.reactivex.observers.DisposableObserver;
 import retrofit2.Response;
 
 import static com.yanazenkevich.rafinfo.interactions.AuthService.KEY_ACCESS_TOKEN;
+import static com.yanazenkevich.rafinfo.interactions.AuthService.KEY_ADMIN;
 import static com.yanazenkevich.rafinfo.interactions.AuthService.SHARED_PREFS_NAME;
 
 public class SettingsFragment extends BaseFragment {
@@ -37,6 +38,8 @@ public class SettingsFragment extends BaseFragment {
 
     private TextView tvPersonalInfo;
     private TextView tvLogout;
+    private TextView tvEmployerInfo;
+    private View vDivider;
     private LogOutUseCase useCase;
     private ValidateUseCase validateUseCase;
     private View vProgress;
@@ -48,6 +51,8 @@ public class SettingsFragment extends BaseFragment {
         tvPersonalInfo = view.findViewById(R.id.fs_personal_info);
         tvLogout = view.findViewById(R.id.fs_logout);
         vProgress = view.findViewById(R.id.fs_progress_bar);
+        tvEmployerInfo = view.findViewById(R.id.fs_employer_info);
+        vDivider = view.findViewById(R.id.fs_divider);
         return view;
     }
 
@@ -66,6 +71,16 @@ public class SettingsFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 createDialog(getContext(), getActivity());
+            }
+        });
+        SharedPreferences preferences = getContext().getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+        boolean isAdmin = preferences.getBoolean(KEY_ADMIN, false);
+        tvEmployerInfo.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
+        vDivider.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
+        tvEmployerInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavigationUtils.replaceWithFragmentAndAddToBackStack(getBaseActivity(), R.id.frame_layout, EditEmployerInfoListFragment.newInstance());
             }
         });
     }

@@ -105,6 +105,7 @@ public class AnnouncementFragment extends BaseFragment{
             adapter.notifyDataSetChanged();
         } else {
             adapter.clear();
+            adapter.notifyDataSetChanged();
         }
     }
 

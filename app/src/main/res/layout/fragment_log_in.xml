@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/acme_explosive"
         android:text="@string/app_name"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Display2"
@@ -74,7 +74,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/log_in_login"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
+            android:maxLines="1"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
 
     </android.support.design.widget.TextInputLayout>
@@ -87,7 +88,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         app:errorEnabled="true"
-        app:layout_constraintBottom_toTopOf="@+id/fl_login_button"
+        app:layout_constraintBottom_toTopOf="@+id/fl_password_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -102,10 +103,24 @@
     </android.support.design.widget.TextInputLayout>
 
     <TextView
+        android:id="@+id/fl_password_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/sign_up_password_new"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/fl_login_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
         android:id="@+id/fl_login_button"
         android:layout_width="256dp"
         android:layout_height="43dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/button_golden_color_background"
@@ -121,7 +136,7 @@
         android:id="@+id/fl_sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/sign_up_button"
